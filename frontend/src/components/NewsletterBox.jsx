@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ShopContext } from "../context/ShopContext";
 
 const NewsletterBox = () => {
+  const { theme } = useContext(ShopContext); // Get theme from context
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
   };
+
   return (
     <div className="text-center">
-      <p className="text-2xl font-medium text-gray-800">
+      <p
+        className={`text-2xl font-medium ${
+          theme === "dark" ? "text-white" : "text-gray-800"
+        }`}
+      >
         Subscribe now & get 20% off
       </p>
-      <p className="text-gray-400 mt-3">
+      <p
+        className={`text-gray-400 mt-3 ${
+          theme === "dark" ? "text-white" : "text-gray-400"
+        }`}
+      >
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor,
         perspiciatis.
       </p>

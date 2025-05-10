@@ -1,20 +1,37 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
-
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 export const ShopContext = createContext();
+
 const ShopContextProvider = (props) => {
   const currency = "$";
   const delivery_fee = 10;
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+  const [theme, setTheme] = useState("light"); // ✅ Theme state
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
   const [products, setProducts] = useState([]);
   const [token, setToken] = useState("");
   const navigate = useNavigate();
+
+  // ✅ Theme toggle function
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    document.body.className = newTheme;
+    localStorage.setItem("theme", newTheme);
+  };
+
+  // ✅ Load theme on app start
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+    document.body.className = savedTheme;
+  }, []);
 
   const addToCart = async (itemId, size) => {
     if (!size) {
@@ -110,6 +127,7 @@ const ShopContextProvider = (props) => {
       toast.error(error.message);
     }
   };
+
   const getUserCart = async (token) => {
     try {
       const response = await axios.post(
@@ -125,9 +143,11 @@ const ShopContextProvider = (props) => {
       toast.error(error.message);
     }
   };
+
   useEffect(() => {
     getProductsData();
   }, []);
+
   useEffect(() => {
     if (!token && localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
@@ -153,9 +173,13 @@ const ShopContextProvider = (props) => {
     setToken,
     token,
     setCartItems,
+    theme, // ✅ Expose theme
+    toggleTheme, // ✅ Expose toggle function
   };
+
   return (
     <ShopContext.Provider value={value}>{props.children}</ShopContext.Provider>
   );
 };
+
 export default ShopContextProvider;

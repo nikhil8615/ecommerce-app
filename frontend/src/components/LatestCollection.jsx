@@ -4,8 +4,9 @@ import Title from "./Title";
 import ProductItem from "./ProductItem";
 
 const LatestCollection = () => {
-  const { products } = useContext(ShopContext);
+  const { products, theme } = useContext(ShopContext); // Get theme from context
   const [latestProducts, setLatestProducts] = useState([]);
+
   useEffect(() => {
     setLatestProducts(products.slice(0, 10));
   }, [products]);
@@ -13,8 +14,13 @@ const LatestCollection = () => {
   return (
     <div className="my-10">
       <div className="text-center py-8 text-3xl">
+        {/* Title with conditional text color */}
         <Title text1={"LATEST"} text2={"COLLECTION"} />
-        <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600">
+        <p
+          className={`w-3/4 m-auto text-xs sm:text-sm md:text-base ${
+            theme === "dark" ? "text-white" : "text-gray-600"
+          }`}
+        >
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel nulla,
           sint iusto ratione neque nam.
         </p>

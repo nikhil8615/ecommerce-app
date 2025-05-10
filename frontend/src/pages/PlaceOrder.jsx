@@ -18,6 +18,7 @@ const Placeorder = () => {
     delivery_fee,
     products,
   } = useContext(ShopContext);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -29,10 +30,9 @@ const Placeorder = () => {
     country: "",
     phone: "",
   });
-  const onChangeHandler = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
 
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
     setFormData((data) => ({ ...data, [name]: value }));
   };
 
@@ -55,11 +55,13 @@ const Placeorder = () => {
           }
         }
       }
-      let orderData = {
+
+      const orderData = {
         address: formData,
         items: orderItem,
         amount: getCartAmount() + delivery_fee,
       };
+
       switch (method) {
         case "cod":
           const response = await axios.post(
@@ -74,11 +76,13 @@ const Placeorder = () => {
             toast.error(response.data.message);
           }
           break;
+
         default:
+          toast.warn("Selected payment method is not implemented yet.");
           break;
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error(error.message);
     }
   };
@@ -88,10 +92,12 @@ const Placeorder = () => {
       onSubmit={onSubmitHandler}
       className="flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t"
     >
+      {/* Delivery Information */}
       <div className="flex flex-col gap-4 w-full sm:max-w-[480px]">
         <div className="text-xl sm:text-2xl my-3">
-          <Title text1={"DELIVERY"} text2={"INFORMATION"} />
+          <Title text1="DELIVERY" text2="INFORMATION" />
         </div>
+
         <div className="flex gap-3">
           <input
             required
@@ -112,6 +118,7 @@ const Placeorder = () => {
             className="border border-gray-300 outline-none rounded py-1.5 px-3.5 w-full"
           />
         </div>
+
         <input
           required
           onChange={onChangeHandler}
@@ -130,6 +137,7 @@ const Placeorder = () => {
           placeholder="Street"
           className="border border-gray-300 outline-none rounded py-1.5 px-3.5 w-full"
         />
+
         <div className="flex gap-3">
           <input
             required
@@ -150,6 +158,7 @@ const Placeorder = () => {
             className="border border-gray-300 outline-none rounded py-1.5 px-3.5 w-full"
           />
         </div>
+
         <div className="flex gap-3">
           <input
             required
@@ -170,6 +179,7 @@ const Placeorder = () => {
             className="border border-gray-300 outline-none rounded py-1.5 px-3.5 w-full"
           />
         </div>
+
         <input
           required
           onChange={onChangeHandler}
@@ -181,53 +191,72 @@ const Placeorder = () => {
         />
       </div>
 
-      <div className="mt-8">
+      {/* Payment Method and Cart Summary */}
+      <div className="mt-8 w-full">
         <div className="mt-8 min-w-80">
           <CartTotal />
         </div>
+
         <div className="mt-12">
-          <Title text1={"PAYMENT"} text2={"METHOD"} />
+          <Title text1="PAYMENT" text2="METHOD" />
+
           <div className="flex gap-3 flex-col lg:flex-row">
+            {/* Stripe */}
             <div
               onClick={() => setMethod("stripe")}
-              className="flex items-center gap-3 border p-2 px-3 cursor-pointer"
+              className={`flex items-center gap-3 border p-2 px-3 cursor-pointer rounded ${
+                method === "stripe" ? "border-green-500" : ""
+              }`}
             >
               <p
                 className={`min-w-3.5 h-3.5 border rounded-full ${
                   method === "stripe" ? "bg-green-400" : ""
                 }`}
               ></p>
-              <img src={assets.stripe_logo} className="h-5 mx-4" alt="" />
+              <img src={assets.stripe_logo} className="h-5 mx-4" alt="Stripe" />
             </div>
+
+            {/* Razorpay */}
             <div
               onClick={() => setMethod("razorpay")}
-              className="flex items-center gap-3 border p-2 px-3 cursor-pointer"
+              className={`flex items-center gap-3 border p-2 px-3 cursor-pointer rounded ${
+                method === "razorpay" ? "border-green-500" : ""
+              }`}
             >
               <p
                 className={`min-w-3.5 h-3.5 border rounded-full ${
                   method === "razorpay" ? "bg-green-400" : ""
                 }`}
               ></p>
-              <img src={assets.razorpay_logo} className="h-5 mx-4" alt="" />
+              <img
+                src={assets.razorpay_logo}
+                className="h-5 mx-4"
+                alt="Razorpay"
+              />
             </div>
+
+            {/* Cash on Delivery */}
             <div
               onClick={() => setMethod("cod")}
-              className="flex items-center gap-3 border p-2 px-3 cursor-pointer"
+              className={`flex items-center gap-3 border p-2 px-3 cursor-pointer rounded ${
+                method === "cod" ? "border-green-500" : ""
+              }`}
             >
               <p
                 className={`min-w-3.5 h-3.5 border rounded-full ${
                   method === "cod" ? "bg-green-400" : ""
                 }`}
               ></p>
-              <p className="tex-gray-500 text-sm font-medium mx-4">
+              <p className="text-gray-700 text-sm font-medium mx-4">
                 CASH ON DELIVERY
               </p>
             </div>
           </div>
+
           <div className="w-full text-end mt-8">
             <button
               type="submit"
-              className="bg-black text-white px-16 py-3 text-sm"
+              className="bg-black text-white px-16 py-3 text-sm rounded hover:bg-gray-800 transition"
             >
               PLACE ORDER
             </button>

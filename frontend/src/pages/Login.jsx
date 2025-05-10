@@ -1,17 +1,16 @@
-import React, { useState } from "react";
-import { useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { ShopContext } from "../context/ShopContext";
 import axios from "axios";
-// import toast from "react-toastify";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
 
 const Login = () => {
   const [currentState, setCurrentState] = useState("login");
-  const { token, setToken, navigate, backendUrl } = useContext(ShopContext);
+  const { token, setToken, navigate, backendUrl, theme } =
+    useContext(ShopContext);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     try {
@@ -50,28 +49,35 @@ const Login = () => {
       navigate("/");
     }
   }, [token]);
+
   return (
-    <div>
+    <div
+      className={`min-h-screen ${
+        theme === "dark" ? " text-gray-300" : "bg-white text-gray-900"
+      }`}
+    >
       <form
         onSubmit={onSubmitHandler}
-        action=""
-        className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 text-gray-800"
+        className={`flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 ${
+          theme === "dark" ? "text-gray-300" : "text-gray-800"
+        }`}
       >
         <div className="inline-flex items-center gap-2 mb-2 mt-10">
           <p className="prata-regular text-3xl">{currentState}</p>
           <hr className="border-none h-[1.5px] w-8 bg-gray-800" />
         </div>
-        {currentState === "login" ? (
-          ""
-        ) : (
+
+        {currentState === "login" ? null : (
           <input
             onChange={(e) => setName(e.target.value)}
             value={name}
             type="text"
-            className="w-full px-3 py-2 border border-gray-800"
+            className={`w-full px-3 py-2 border ${
+              theme === "dark"
+                ? "border-gray-600 bg-transparent"
+                : "border-gray-800 bg-white"
+            }`}
             placeholder="Name"
-            name=""
-            id=""
             required
           />
         )}
@@ -80,22 +86,28 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)}
           value={email}
           type="email"
-          className="w-full px-3 py-2 border border-gray-800"
+          className={`w-full px-3 py-2 border ${
+            theme === "dark"
+              ? "border-gray-600 bg-transparent"
+              : "border-gray-800 bg-white"
+          }`}
           placeholder="Email"
-          name=""
-          id=""
           required
         />
+
         <input
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           type="password"
-          className="w-full px-3 py-2 border border-gray-800"
+          className={`w-full px-3 py-2 border ${
+            theme === "dark"
+              ? "border-gray-600 bg-transparent"
+              : "border-gray-800 bg-white"
+          }`}
           placeholder="Password"
-          name=""
-          id=""
           required
         />
+
         <div className="w-full flex justify-between text-sm mt-[-8px]">
           <p className="cursor-pointer">Forgot your password</p>
           {currentState === "login" ? (
@@ -114,6 +126,7 @@ const Login = () => {
             </p>
           )}
         </div>
+
         <button className="bg-black text-white font-light px-8 py-2 mt-4">
           {currentState === "login" ? "Sign In" : "Sign Up"}
         </button>

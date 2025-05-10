@@ -1,43 +1,52 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
-import { useEffect } from "react";
 import axios from "axios";
 
 const Orders = () => {
-  const { backendUrl, token, currency } = useContext(ShopContext);
+  const { backendUrl, token, currency, theme } = useContext(ShopContext);
   const [orderData, setOrderData] = useState([]);
 
   const loadOrderData = async () => {
     try {
-      if (!token) {
-        return null;
-      }
+      if (!token) return null;
+
       const response = await axios.post(
         backendUrl + "/api/order/userorders",
         {},
         { headers: { token } }
       );
+
       if (response.data.success) {
         let allOrdersItem = [];
-        response.data.orders.map((order) => {
-          order.items.map((item) => {
+        response.data.orders.forEach((order) => {
+          order.items.forEach((item) => {
             item["status"] = order.status;
             item["payment"] = order.payment;
             item["paymentMethod"] = order.paymentMethod;
-            item["Date"] = order.date;
+            item["date"] = order.date;
+            item["category"] = item.category;
+            item["subCategory"] = item.subCategory;
             allOrdersItem.push(item);
           });
         });
         setOrderData(allOrdersItem.reverse());
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Failed to load order data:", error);
+    }
   };
+
   useEffect(() => {
     loadOrderData();
   }, [token]);
+
   return (
-    <div className="border-t pt-16">
+    <div
+      className={`${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+      }border-t pt-16`}
+    >
       <div className="text-2xl">
         <Title text1={"MY"} text2={"ORDERS"} />
       </div>
@@ -68,6 +77,10 @@ const Orders = () => {
                 <p className="mt-2">
                   Payment:{" "}
                   <span className="text-gray-400">{items.paymentMethod}</span>
+                </p>
+                <p className="mt-1 text-gray-500 text-sm">
+                  Category: <span>{items.category}</span> | Sub-category:{" "}
+                  <span>{items.subCategory}</span>
                 </p>
               </div>
             </div>
