@@ -16,6 +16,7 @@ const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [products, setProducts] = useState([]);
   const [token, setToken] = useState("");
+  const [wishlistItems, setWishlistItems] = useState({});
   const navigate = useNavigate();
 
   // ✅ Theme toggle function
@@ -154,6 +155,36 @@ const ShopContextProvider = (props) => {
     }
   });
 
+  const addToWishlist = (productId, product) => {
+    setWishlistItems((prev) => ({
+      ...prev,
+      [productId]: {
+        _id: productId,
+        name: product.name,
+        price: product.price,
+        image: product.image[0], // Use the first image
+        category: product.category,
+        subCategory: product.subCategory,
+      },
+    }));
+  };
+
+  const removeFromWishlist = (productId) => {
+    setWishlistItems((prev) => {
+      const newItems = { ...prev };
+      delete newItems[productId];
+      return newItems;
+    });
+  };
+
+  const isInWishlist = (productId) => {
+    return !!wishlistItems[productId];
+  };
+
+  const getWishlistCount = () => {
+    return Object.keys(wishlistItems).length;
+  };
+
   const value = {
     products,
     currency,
@@ -174,6 +205,10 @@ const ShopContextProvider = (props) => {
     setCartItems,
     theme, // ✅ Expose theme
     toggleTheme, // ✅ Expose toggle function
+    addToWishlist,
+    removeFromWishlist,
+    isInWishlist,
+    getWishlistCount,
   };
 
   return (

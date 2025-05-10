@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
 import { useLocation } from "react-router-dom";
+import VoiceSearch from "./VoiceSearch";
 
 const SearchBar = () => {
   const [visible, setVisible] = useState(false);
@@ -16,6 +17,11 @@ const SearchBar = () => {
       setVisible(false);
     }
   }, [location]);
+
+  const handleVoiceSearch = (transcript) => {
+    setSearch(transcript);
+  };
+
   return showSearch && visible ? (
     <div
       className={`${
@@ -27,12 +33,13 @@ const SearchBar = () => {
           type="text"
           placeholder="search"
           className={`flex-1 outline-none bg-inherit text-sm ${
-            theme === "dark" ? "text-black" : "text-black"
+            theme === "dark" ? "text-white" : "text-black"
           }`}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <img src={assets.search_icon} className="w-4 " alt="" />
+        <VoiceSearch onSearch={handleVoiceSearch} />
+        <img src={assets.search_icon} className="w-4 ml-2" alt="" />
       </div>
       <img
         src={assets.cross_icon}

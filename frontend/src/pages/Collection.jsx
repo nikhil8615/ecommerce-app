@@ -4,6 +4,30 @@ import { assets } from "../assets/assets";
 import Title from "../components/Title";
 import ProductItem from "../components/ProductItem";
 
+const ProductSkeleton = ({ theme }) => {
+  return (
+    <div className="animate-pulse">
+      <div
+        className={`w-full aspect-square rounded-md ${
+          theme === "dark" ? "bg-gray-700" : "bg-gray-200"
+        }`}
+      />
+      <div className="mt-3">
+        <div
+          className={`h-4 w-3/4 rounded-md mb-2 ${
+            theme === "dark" ? "bg-gray-700" : "bg-gray-200"
+          }`}
+        />
+        <div
+          className={`h-4 w-1/4 rounded-md ${
+            theme === "dark" ? "bg-gray-700" : "bg-gray-200"
+          }`}
+        />
+      </div>
+    </div>
+  );
+};
+
 const Collection = () => {
   const { products, search, showSearch } = useContext(ShopContext);
   const { theme } = useContext(ShopContext);
@@ -12,8 +36,10 @@ const Collection = () => {
   const [category, setCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
   const [sortType, setSortType] = useState("relevant");
+  const [isLoading, setIsLoading] = useState(true);
 
   const toggleCategory = (e) => {
+    setIsLoading(true);
     if (category.includes(e.target.value)) {
       setCategory((prev) => prev.filter((item) => item !== e.target.value));
     } else {
@@ -22,6 +48,7 @@ const Collection = () => {
   };
 
   const toggleSubCategory = (e) => {
+    setIsLoading(true);
     if (subCategory.includes(e.target.value)) {
       setSubCategory((prev) => prev.filter((item) => item !== e.target.value));
     } else {
@@ -48,9 +75,13 @@ const Collection = () => {
     }
 
     setFilterProducts(productsCopy);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
   };
 
   const sortProducts = () => {
+    setIsLoading(true);
     let fproductsCopy = filterProducts.slice();
     switch (sortType) {
       case "low-high":
@@ -63,10 +94,15 @@ const Collection = () => {
         applyFilter();
         break;
     }
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
   };
 
   useEffect(() => {
-    applyFilter();
+    if (products.length > 0) {
+      applyFilter();
+    }
   }, [category, subCategory, search, showSearch, products]);
 
   useEffect(() => {
@@ -113,235 +149,82 @@ const Collection = () => {
               <input
                 type="checkbox"
                 className="w-3"
-                value={"Men"}
+                value={"VitaminsSupplements"}
                 onChange={toggleCategory}
               />
-              Men
+              Vitamins & Supplements
             </p>
             <p className="flex gap-2">
               <input
                 type="checkbox"
                 className="w-3"
-                value={"Women"}
+                value={"ProteinFitness"}
                 onChange={toggleCategory}
               />
-              Women
+              Protein & Fitness
             </p>
             <p className="flex gap-2">
               <input
                 type="checkbox"
                 className="w-3"
-                value={"Kids"}
+                value={"WeightManagement"}
                 onChange={toggleCategory}
               />
-              Kids
+              Weight Management
             </p>
             <p className="flex gap-2">
               <input
                 type="checkbox"
                 className="w-3"
-                value={"Book"}
+                value={"HealthySnacksBeverages"}
                 onChange={toggleCategory}
               />
-              Books
+              Healthy Snacks & Beverages
             </p>
             <p className="flex gap-2">
               <input
                 type="checkbox"
                 className="w-3"
-                value={"Cosmetics"}
+                value={"ImmunityWellness"}
                 onChange={toggleCategory}
               />
-              Cosmetics
+              Immunity & Wellness
             </p>
             <p className="flex gap-2">
               <input
                 type="checkbox"
                 className="w-3"
-                value={"DIgitalGadget"}
+                value={"KidsNutrition"}
                 onChange={toggleCategory}
               />
-              Digital Gadget
+              Kids' Nutrition
             </p>
             <p className="flex gap-2">
               <input
                 type="checkbox"
                 className="w-3"
-                value={"Footwear"}
+                value={"WomenHealth"}
                 onChange={toggleCategory}
               />
-              Footwear
+              Women's Health
             </p>
             <p className="flex gap-2">
               <input
                 type="checkbox"
                 className="w-3"
-                value={"HomeDecor"}
+                value={"ElderlyCare"}
                 onChange={toggleCategory}
               />
-              Home Decor
+              Elderly Care
             </p>
             <p className="flex gap-2">
               <input
                 type="checkbox"
                 className="w-3"
-                value={"IceCreamDesserts"}
+                value={"DiabeticFriendly"}
                 onChange={toggleCategory}
               />
-              Ice Cream & Desserts
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"Jewelry"}
-                onChange={toggleCategory}
-              />
-              Jewelry
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"KitchenAppliances"}
-                onChange={toggleCategory}
-              />
-              Kitchen Appliances
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"LaptopsAccessories"}
-                onChange={toggleCategory}
-              />
-              Laptops & Accessories
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"MobilesTablets"}
-                onChange={toggleCategory}
-              />
-              Mobiles & Tablets
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"NutritionHealth"}
-                onChange={toggleCategory}
-              />
-              Nutrition & Health
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"OrganicFood"}
-                onChange={toggleCategory}
-              />
-              Organic Food
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"PetSupplies"}
-                onChange={toggleCategory}
-              />
-              Pet Supplies
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"QuickMeals"}
-                onChange={toggleCategory}
-              />
-              Quick Meals (Ready-to-eat)
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"RideGearAutoAccessories"}
-                onChange={toggleCategory}
-              />
-              Ride Gear & Auto Accessories
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"StationeryOfficeSupplies"}
-                onChange={toggleCategory}
-              />
-              Stationery & Office Supplies
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"ToysGames"}
-                onChange={toggleCategory}
-              />
-              Toys & Games
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"UnderwearLoungewear"}
-                onChange={toggleCategory}
-              />
-              Underwear & Loungewear
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"VegetablesFruits"}
-                onChange={toggleCategory}
-              />
-              Vegetables & Fruits
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"Watches"}
-                onChange={toggleCategory}
-              />
-              Watches
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"XtremeSportsGear"}
-                onChange={toggleCategory}
-              />
-              Xtreme Sports Gear
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"YogaProducts"}
-                onChange={toggleCategory}
-              />
-              Yoga Products
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"ZipWearables"}
-                onChange={toggleCategory}
-              />
-              Zip Wearables (Smartwear)
+              Diabetic-Friendly
             </p>
           </div>
         </div>
@@ -418,15 +301,21 @@ const Collection = () => {
           </select>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
-          {filterProducts.map((item, index) => (
-            <ProductItem
-              key={index}
-              name={item.name}
-              id={item._id}
-              price={item.price}
-              image={item.image}
-            />
-          ))}
+          {isLoading
+            ? Array(8)
+                .fill()
+                .map((_, index) => (
+                  <ProductSkeleton key={index} theme={theme} />
+                ))
+            : filterProducts.map((item, index) => (
+                <ProductItem
+                  key={index}
+                  name={item.name}
+                  id={item._id}
+                  price={item.price}
+                  image={item.image}
+                />
+              ))}
         </div>
       </div>
     </div>

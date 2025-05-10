@@ -62,7 +62,7 @@ const Product = () => {
           <p className="mt-5 text-gray-500 md:w-4/5">
             {productData.description}
           </p>
-          {productData.sizes && productData.sizes.length > 0 && (
+          {/* {productData.sizes && productData.sizes.length > 0 && (
             <div className="flex flex-col gap-4 my-8">
               <p>Select Size</p>
               <div className="flex gap-2">
@@ -79,7 +79,7 @@ const Product = () => {
                 ))}
               </div>
             </div>
-          )}
+          )} */}
           <button
             onClick={() => addToCart(productData._id, size || "")}
             className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700"

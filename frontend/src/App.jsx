@@ -12,6 +12,7 @@ import Navbar from "./components/Navbar";
 import Collection from "./pages/Collection";
 import Footer from "./components/Footer";
 import SearchBar from "./components/SearchBar";
+import Wishlist from "./pages/Wishlist";
 import { ToastContainer, toast } from "react-toastify";
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/placeorder" element={<Placeorder />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/whishlistsdfg" element={<Wishlist />} />
       </Routes>
       <Footer />
     </div>

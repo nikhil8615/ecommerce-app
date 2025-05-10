@@ -4,10 +4,64 @@ import Title from "../components/Title";
 import { assets } from "../assets/assets";
 import CartTotal from "../components/CartTotal";
 
+const CartSkeleton = ({ theme }) => {
+  return (
+    <div className="animate-pulse">
+      {[1, 2, 3].map((item) => (
+        <div
+          key={item}
+          className={`py-4 border-t border-b ${
+            theme === "dark" ? "text-gray-300" : "text-gray-700"
+          } grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4`}
+        >
+          <div className="flex items-start gap-6">
+            <div
+              className={`w-16 sm:w-20 h-16 sm:h-20 rounded-md ${
+                theme === "dark" ? "bg-gray-700" : "bg-gray-200"
+              }`}
+            />
+            <div className="flex-1">
+              <div
+                className={`h-4 w-3/4 rounded-md mb-2 ${
+                  theme === "dark" ? "bg-gray-700" : "bg-gray-200"
+                }`}
+              />
+              <div className="flex items-center gap-5 mt-2">
+                <div
+                  className={`h-4 w-20 rounded-md ${
+                    theme === "dark" ? "bg-gray-700" : "bg-gray-200"
+                  }`}
+                />
+                <div
+                  className={`h-6 w-16 rounded-md ${
+                    theme === "dark" ? "bg-gray-700" : "bg-gray-200"
+                  }`}
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            className={`h-8 w-16 rounded-md ${
+              theme === "dark" ? "bg-gray-700" : "bg-gray-200"
+            }`}
+          />
+          <div
+            className={`h-5 w-5 rounded-md ${
+              theme === "dark" ? "bg-gray-700" : "bg-gray-200"
+            }`}
+          />
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const Cart = () => {
   const { products, currency, cartItems, updateQuantity, navigate, theme } =
     useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     if (products.length > 0) {
       const tempData = [];
@@ -23,8 +77,10 @@ const Cart = () => {
         }
       }
       setCartData(tempData);
+      setIsLoading(false);
     }
   }, [cartItems, products]);
+
   return (
     <div
       className={`${
@@ -35,62 +91,85 @@ const Cart = () => {
         <Title text1={"YOUR"} text2={"CART"} />
       </div>
       <div>
-        {cartData.map((item, index) => {
-          const productData = products.find(
-            (product) => product._id === item._id
-          );
-          return (
-            <div
-              key={index}
-              className="py-4 border-t border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4"
-            >
-              <div className="flex items-start gap-6">
-                <img
-                  src={productData.image[0]}
-                  className="w-16 sm:w-20"
-                  alt=""
-                />
-                <div>
-                  <p className="text-sm sm:text-lg font-medium">
-                    {productData.name}
-                  </p>
-                  <div className="flex items-center gap-5 mt-2">
-                    <p>
-                      {currency}
-                      {productData.price}
+        {isLoading ? (
+          <CartSkeleton theme={theme} />
+        ) : (
+          cartData.map((item, index) => {
+            const productData = products.find(
+              (product) => product._id === item._id
+            );
+            if (!productData) return null;
+            return (
+              <div
+                key={index}
+                className={`py-4 border-t border-b ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                } grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4`}
+              >
+                <div className="flex items-start gap-6">
+                  <img
+                    src={productData.image[0]}
+                    className="w-16 sm:w-20"
+                    alt=""
+                  />
+                  <div>
+                    <p
+                      className={`text-sm sm:text-lg font-medium ${
+                        theme === "dark" ? "text-gray-300" : "text-gray-700"
+                      }`}
+                    >
+                      {productData.name}
                     </p>
-                    {item.size && (
-                      <p className="px-2 sm:px-3 sm:py-1 border  bg-slate-50">
-                        {item.size}
+                    <div className="flex items-center gap-5 mt-2">
+                      <p
+                        className={
+                          theme === "dark" ? "text-gray-300" : "text-gray-700"
+                        }
+                      >
+                        {currency}
+                        {productData.price}
                       </p>
-                    )}
+                      {item.size && (
+                        <p
+                          className={`px-2 sm:px-3 sm:py-1 border ${
+                            theme === "dark"
+                              ? "bg-gray-800 text-gray-300"
+                              : "bg-slate-50"
+                          }`}
+                        >
+                          {item.size}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
+                <input
+                  onChange={(e) =>
+                    e.target.value === "" || e.target.value === "0"
+                      ? null
+                      : updateQuantity(
+                          item._id,
+                          item.size,
+                          Number(e.target.value)
+                        )
+                  }
+                  type="number"
+                  min={1}
+                  defaultValue={item.quantity}
+                  className={`border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1 ${
+                    theme === "dark" ? "bg-gray-800 text-gray-300" : "bg-white"
+                  }`}
+                />
+                <img
+                  onClick={() => updateQuantity(item._id, item.size, 0)}
+                  src={assets.bin_icon}
+                  className="w-4 mr-4 sm:w-5 cursor-pointer"
+                  alt=""
+                />
               </div>
-              <input
-                onChange={(e) =>
-                  e.target.value === "" || e.target.value === "0"
-                    ? null
-                    : updateQuantity(
-                        item._id,
-                        item.size,
-                        Number(e.target.value)
-                      )
-                }
-                type="number"
-                min={1}
-                defaultValue={item.quantity}
-                className="border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1"
-              />
-              <img
-                onClick={() => updateQuantity(item._id, item.size, 0)}
-                src={assets.bin_icon}
-                className="w-4 mr-4 sm:w-5 cursor-pointer"
-                alt=""
-              />
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
       <div className="flex justify-end my-20">
         <div className="w-full sm:w-[450px] ">
