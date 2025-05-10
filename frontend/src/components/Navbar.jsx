@@ -3,6 +3,9 @@ import { assets } from "../assets/assets";
 import { NavLink, Link } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import Switch from "./Switch";
+import img from "../assets/shopping_bag-removebg-preview.png";
+import img2 from "../assets/images-removebg-preview.png";
+import img3 from "../assets/logo_nutri.png";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
@@ -27,7 +30,7 @@ const Navbar = () => {
   return (
     <div className="flex items-center justify-between py-5 font-medium">
       <Link to={"/"}>
-        <img src={assets.logo} className="w-36" alt="" />
+        <img src={assets.logo} className="w-36 " alt="NutriWell Logo" />
       </Link>
       <ul
         className={`hidden sm:flex gap-5 text-sm ${
@@ -64,7 +67,7 @@ const Navbar = () => {
         <div className="group relative">
           <img
             onClick={() => (token ? null : navigate("/login"))}
-            src={assets.profile_icon}
+            src={theme === "dark" ? img2 : assets.profile_icon}
             className="w-5 cursor-pointer"
             alt=""
           />
@@ -88,7 +91,7 @@ const Navbar = () => {
         </div>
         <Link to={"/cart"} className="relative">
           <img
-            src={theme === "dark" ? assets.shopping_bag : assets.cart_icon}
+            src={theme === "dark" ? img : assets.cart_icon}
             className="w-5 min-w-5 h-5"
             alt=""
           />

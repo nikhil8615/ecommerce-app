@@ -6,14 +6,14 @@ const addToCart = async (req, res) => {
     const userData = await userModel.findById(userId);
     let cartData = await userData.cartData;
     if (cartData[itemId]) {
-      if (cartData[itemId][size]) {
-        cartData[itemId][size] += 1;
+      if (cartData[itemId][size || "default"]) {
+        cartData[itemId][size || "default"] += 1;
       } else {
-        cartData[itemId][size] = 1;
+        cartData[itemId][size || "default"] = 1;
       }
     } else {
       cartData[itemId] = {};
-      cartData[itemId][size] = 1;
+      cartData[itemId][size || "default"] = 1;
     }
     await userModel.findByIdAndUpdate(userId, { cartData });
     res.json({ success: true, message: "Added To Cart" });
@@ -27,7 +27,10 @@ const updateCart = async (req, res) => {
     const { userId, itemId, size, quantity } = req.body;
     const userData = await userModel.findById(userId);
     let cartData = await userData.cartData;
-    cartData[itemId][size] = quantity;
+    if (!cartData[itemId]) {
+      cartData[itemId] = {};
+    }
+    cartData[itemId][size || "default"] = quantity;
     await userModel.findByIdAndUpdate(userId, { cartData });
     res.json({ success: true, message: "Cart Updated" });
   } catch (error) {
