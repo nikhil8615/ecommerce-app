@@ -229,7 +229,7 @@ const Collection = () => {
           </div>
         </div>
 
-        <div
+        {/* <div
           className={`border border-gray-300 pl-5 py-3 my-5 ${
             showFilter ? "" : "hidden"
           } sm:block`}
@@ -274,7 +274,7 @@ const Collection = () => {
               Winterwear
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="flex-1">
