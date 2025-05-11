@@ -153,9 +153,17 @@ const Add = ({ token }) => {
             name=""
             id=""
           >
-            <option value="Men">XYZ</option>
-            <option value="Women">Women</option>
-            <option value="Kids">Kids</option>
+            <option value="VitaminsSupplements">Vitamins & Supplements</option>
+            <option value="ProteinFitness">Protein & Fitness</option>
+            <option value="WeightManagement">Weight Management</option>
+            <option value="HealthySnacksBeverages">
+              Healthy Snacks & Beverages
+            </option>
+            <option value="ImmunityWellness">Immunity & Wellness</option>
+            <option value="KidsNutrition">Kids' Nutrition</option>
+            <option value="WomenHealth">Women's Health</option>
+            <option value="ElderlyCare">Elderly Care</option>
+            <option value="DiabeticFriendly">Diabetic-Friendly</option>
           </select>
         </div>
         <div>
