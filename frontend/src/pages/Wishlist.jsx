@@ -5,14 +5,21 @@ import Title from "../components/Title";
 import { Link } from "react-router-dom";
 
 const Wishlist = () => {
-  const { wishlistItems, removeFromWishlist, theme } = useContext(ShopContext);
+  const {
+    wishlistItems = {},
+    removeFromWishlist,
+    theme,
+  } = useContext(ShopContext);
+
+  const hasItems = Object.keys(wishlistItems || {}).length > 0;
 
   return (
     <div className="my-10">
       <div className="text-center text-3xl py-8">
         <Title text1={"MY"} text2={"WISHLIST"} />
       </div>
-      {Object.keys(wishlistItems).length === 0 ? (
+
+      {!hasItems ? (
         <div
           className={`text-center ${
             theme === "dark" ? "text-gray-300" : "text-gray-600"

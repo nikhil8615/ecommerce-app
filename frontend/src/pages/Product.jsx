@@ -86,6 +86,7 @@ const Product = () => {
           >
             ADD TO CART
           </button>
+
           <hr className="mt-8 sm:w-4/5" />
           <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
             <p>100% Original Product</p>

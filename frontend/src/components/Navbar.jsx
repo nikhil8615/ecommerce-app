@@ -6,6 +6,7 @@ import Switch from "./Switch";
 import img from "../assets/shopping_bag-removebg-preview.png";
 import img2 from "../assets/images-removebg-preview.png";
 import img3 from "../assets/logo_nutri.png";
+import { AiFillHeart } from "react-icons/ai"; // Wishlist icon
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
@@ -18,6 +19,7 @@ const Navbar = () => {
     setCartItems,
     theme,
     toggleTheme,
+    wishlistItems,
   } = useContext(ShopContext);
 
   const logout = () => {
@@ -64,6 +66,17 @@ const Navbar = () => {
           onClick={() => setShowSearch(true)}
           alt=""
         />
+
+        <NavLink to="/whishlist" className="relative">
+          <AiFillHeart
+            className={`text-[22px] cursor-pointer ${
+              theme === "dark"
+                ? "text-white hover:text-red-400"
+                : "text-gray-600 hover:text-red-500"
+            }`}
+          />
+        </NavLink>
+
         <div className="group relative">
           <img
             onClick={() => (token ? null : navigate("/login"))}
@@ -71,7 +84,6 @@ const Navbar = () => {
             className="w-5 cursor-pointer"
             alt=""
           />
-
           {token && (
             <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
               <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
@@ -89,6 +101,7 @@ const Navbar = () => {
             </div>
           )}
         </div>
+
         <Link to={"/cart"} className="relative">
           <img
             src={theme === "dark" ? img : assets.cart_icon}
@@ -99,6 +112,7 @@ const Navbar = () => {
             {getCartCount()}
           </p>
         </Link>
+
         <img
           src={assets.menu_icon}
           className="w-5 cursor-pointer sm:hidden"
@@ -106,7 +120,8 @@ const Navbar = () => {
           alt=""
         />
       </div>
-      {/*Sidebar menu for small screen */}
+
+      {/* Sidebar menu for small screen */}
       <div
         className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${
           visible ? "w-full" : "w-0"
@@ -147,6 +162,13 @@ const Navbar = () => {
             to={"/contact"}
           >
             CONTACT
+          </NavLink>
+          <NavLink
+            onClick={() => setVisible(false)}
+            className="py-2 pl-6 border"
+            to={"/wishlist"}
+          >
+            WISHLIST
           </NavLink>
         </div>
       </div>

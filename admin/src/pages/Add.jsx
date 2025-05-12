@@ -13,8 +13,8 @@ const Add = ({ token }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("Men");
-  const [subCategory, setSubCategory] = useState("Topwear");
+  const [category, setCategory] = useState("DiabeticFriendly");
+  const [subCategory, setSubCategory] = useState("BestWeightManagement");
   const [bestSeller, setBestSeller] = useState(false);
   const [sizes, setSizes] = useState([]);
 
@@ -174,9 +174,11 @@ const Add = ({ token }) => {
             name=""
             id=""
           >
-            <option value="Topwear">Topwear</option>
-            <option value="Bottomwear">Bottomwear</option>
-            <option value="Winterwear">Winterwear</option>
+            <option value="BestVitaminsSupplements">Best Vitamnins</option>
+            <option value="BestProteinFitness">Best Protein Fitness</option>
+            <option value="BestWeightManagement">
+              Best Weight Managements
+            </option>
           </select>
         </div>
         <div>
@@ -190,7 +192,7 @@ const Add = ({ token }) => {
           />
         </div>
       </div>
-      <div>
+      {/* <div>
         <p className="mb-2">Product Sizes</p>
         <div className="flex gap-3">
           <div
@@ -279,7 +281,7 @@ const Add = ({ token }) => {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="flex gap-2 mt-2">
         <input
           onChange={() => setBestSeller((prev) => !prev)}
