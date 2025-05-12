@@ -191,6 +191,7 @@ const Collection = () => {
                     type="checkbox"
                     className="w-3"
                     value={"VitaminsSupplements"}
+                    checked={category.includes("VitaminsSupplements")}
                     onChange={toggleCategory}
                   />
                   Vitamins & Supplements
@@ -200,6 +201,7 @@ const Collection = () => {
                     type="checkbox"
                     className="w-3"
                     value={"ProteinFitness"}
+                    checked={category.includes("ProteinFitness")}
                     onChange={toggleCategory}
                   />
                   Protein & Fitness
@@ -209,6 +211,7 @@ const Collection = () => {
                     type="checkbox"
                     className="w-3"
                     value={"WeightManagement"}
+                    checked={category.includes("WeightManagement")}
                     onChange={toggleCategory}
                   />
                   Weight Management
@@ -218,6 +221,7 @@ const Collection = () => {
                     type="checkbox"
                     className="w-3"
                     value={"HealthySnacksBeverages"}
+                    checked={category.includes("HealthySnacksBeverages")}
                     onChange={toggleCategory}
                   />
                   Healthy Snacks & Beverages
@@ -227,6 +231,7 @@ const Collection = () => {
                     type="checkbox"
                     className="w-3"
                     value={"ImmunityWellness"}
+                    checked={category.includes("ImmunityWellness")}
                     onChange={toggleCategory}
                   />
                   Immunity & Wellness
@@ -236,6 +241,7 @@ const Collection = () => {
                     type="checkbox"
                     className="w-3"
                     value={"KidsNutrition"}
+                    checked={category.includes("KidsNutrition")}
                     onChange={toggleCategory}
                   />
                   Kids' Nutrition
@@ -245,6 +251,7 @@ const Collection = () => {
                     type="checkbox"
                     className="w-3"
                     value={"WomenHealth"}
+                    checked={category.includes("WomenHealth")}
                     onChange={toggleCategory}
                   />
                   Women's Health
@@ -254,6 +261,7 @@ const Collection = () => {
                     type="checkbox"
                     className="w-3"
                     value={"ElderlyCare"}
+                    checked={category.includes("ElderlyCare")}
                     onChange={toggleCategory}
                   />
                   Elderly Care
@@ -263,6 +271,7 @@ const Collection = () => {
                     type="checkbox"
                     className="w-3"
                     value={"DiabeticFriendly"}
+                    checked={category.includes("DiabeticFriendly")}
                     onChange={toggleCategory}
                   />
                   Diabetic-Friendly
