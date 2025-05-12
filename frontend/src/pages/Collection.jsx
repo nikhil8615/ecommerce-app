@@ -7,11 +7,13 @@ import ProductItem from "../components/ProductItem";
 const ProductSkeleton = ({ theme }) => {
   return (
     <div className="animate-pulse">
-      <div
-        className={`w-full aspect-square rounded-md ${
-          theme === "dark" ? "bg-gray-700" : "bg-gray-200"
-        }`}
-      />
+      <div className="overflow-hidden">
+        <div
+          className={`w-full aspect-square rounded-md ${
+            theme === "dark" ? "bg-gray-700" : "bg-gray-200"
+          }`}
+        />
+      </div>
       <div className="mt-3">
         <div
           className={`h-4 w-3/4 rounded-md mb-2 ${
@@ -23,6 +25,34 @@ const ProductSkeleton = ({ theme }) => {
             theme === "dark" ? "bg-gray-700" : "bg-gray-200"
           }`}
         />
+      </div>
+    </div>
+  );
+};
+
+const FilterSkeleton = ({ theme }) => {
+  return (
+    <div className="animate-pulse">
+      <div
+        className={`h-6 w-24 rounded-md mb-4 ${
+          theme === "dark" ? "bg-gray-700" : "bg-gray-200"
+        }`}
+      />
+      <div className="space-y-3">
+        {[1, 2, 3, 4, 5].map((item) => (
+          <div key={item} className="flex items-center gap-2">
+            <div
+              className={`w-3 h-3 rounded ${
+                theme === "dark" ? "bg-gray-700" : "bg-gray-200"
+              }`}
+            />
+            <div
+              className={`h-4 w-24 rounded-md ${
+                theme === "dark" ? "bg-gray-700" : "bg-gray-200"
+              }`}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -128,153 +158,166 @@ const Collection = () => {
           />
         </p>
 
-        <div
-          className={`border border-gray-300 pl-5 py-3 mt-6 ${
-            showFilter ? "" : "hidden"
-          } sm:block`}
-        >
-          <p
-            className={`mb-3 text-sm font-medium ${
-              theme === "dark" ? "text-gray-300" : "text-gray-900"
-            }`}
-          >
-            CATEGORIES
-          </p>
-          <div
-            className={`${
-              theme === "dark" ? "text-gray-300" : "text-gray-900"
-            } flex flex-col gap-2 text-sm font-light`}
-          >
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"VitaminsSupplements"}
-                onChange={toggleCategory}
-              />
-              Vitamins & Supplements
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"ProteinFitness"}
-                onChange={toggleCategory}
-              />
-              Protein & Fitness
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"WeightManagement"}
-                onChange={toggleCategory}
-              />
-              Weight Management
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"HealthySnacksBeverages"}
-                onChange={toggleCategory}
-              />
-              Healthy Snacks & Beverages
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"ImmunityWellness"}
-                onChange={toggleCategory}
-              />
-              Immunity & Wellness
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"KidsNutrition"}
-                onChange={toggleCategory}
-              />
-              Kids' Nutrition
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"WomenHealth"}
-                onChange={toggleCategory}
-              />
-              Women's Health
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"ElderlyCare"}
-                onChange={toggleCategory}
-              />
-              Elderly Care
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"DiabeticFriendly"}
-                onChange={toggleCategory}
-              />
-              Diabetic-Friendly
-            </p>
-          </div>
-        </div>
+        {isLoading ? (
+          <>
+            <div className="mt-6">
+              <FilterSkeleton theme={theme} />
+            </div>
+            <div className="mt-5">
+              <FilterSkeleton theme={theme} />
+            </div>
+          </>
+        ) : (
+          <>
+            <div
+              className={`border border-gray-300 pl-5 py-3 mt-6 ${
+                showFilter ? "" : "hidden"
+              } sm:block`}
+            >
+              <p
+                className={`mb-3 text-sm font-medium ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-900"
+                }`}
+              >
+                CATEGORIES
+              </p>
+              <div
+                className={`${
+                  theme === "dark" ? "text-gray-300" : "text-gray-900"
+                } flex flex-col gap-2 text-sm font-light`}
+              >
+                <p className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    className="w-3"
+                    value={"VitaminsSupplements"}
+                    onChange={toggleCategory}
+                  />
+                  Vitamins & Supplements
+                </p>
+                <p className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    className="w-3"
+                    value={"ProteinFitness"}
+                    onChange={toggleCategory}
+                  />
+                  Protein & Fitness
+                </p>
+                <p className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    className="w-3"
+                    value={"WeightManagement"}
+                    onChange={toggleCategory}
+                  />
+                  Weight Management
+                </p>
+                <p className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    className="w-3"
+                    value={"HealthySnacksBeverages"}
+                    onChange={toggleCategory}
+                  />
+                  Healthy Snacks & Beverages
+                </p>
+                <p className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    className="w-3"
+                    value={"ImmunityWellness"}
+                    onChange={toggleCategory}
+                  />
+                  Immunity & Wellness
+                </p>
+                <p className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    className="w-3"
+                    value={"KidsNutrition"}
+                    onChange={toggleCategory}
+                  />
+                  Kids' Nutrition
+                </p>
+                <p className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    className="w-3"
+                    value={"WomenHealth"}
+                    onChange={toggleCategory}
+                  />
+                  Women's Health
+                </p>
+                <p className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    className="w-3"
+                    value={"ElderlyCare"}
+                    onChange={toggleCategory}
+                  />
+                  Elderly Care
+                </p>
+                <p className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    className="w-3"
+                    value={"DiabeticFriendly"}
+                    onChange={toggleCategory}
+                  />
+                  Diabetic-Friendly
+                </p>
+              </div>
+            </div>
 
-        {/* <div
-          className={`border border-gray-300 pl-5 py-3 my-5 ${
-            showFilter ? "" : "hidden"
-          } sm:block`}
-        >
-          <p
-            className={`mb-3 text-sm font-medium ${
-              theme === "dark" ? "text-gray-300" : "text-gray-900"
-            }`}
-          >
-            TYPE
-          </p>
-          <div
-            className={`${
-              theme === "dark" ? "text-gray-300" : "text-gray-900"
-            } flex flex-col gap-2 text-sm font-light`}
-          >
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"Topwear"}
-                onChange={toggleSubCategory}
-              />
-              Topwear
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"Bottomwear"}
-                onChange={toggleSubCategory}
-              />
-              Bottomwear
-            </p>
-            <p className="flex gap-2">
-              <input
-                type="checkbox"
-                className="w-3"
-                value={"Winterwear"}
-                onChange={toggleSubCategory}
-              />
-              Winterwear
-            </p>
-          </div>
-        </div> */}
+            {/* <div
+              className={`border border-gray-300 pl-5 py-3 my-5 ${
+                showFilter ? "" : "hidden"
+              } sm:block`}
+            >
+              <p
+                className={`mb-3 text-sm font-medium ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-900"
+                }`}
+              >
+                TYPE
+              </p>
+              <div
+                className={`${
+                  theme === "dark" ? "text-gray-300" : "text-gray-900"
+                } flex flex-col gap-2 text-sm font-light`}
+              >
+                <p className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    className="w-3"
+                    value={"Topwear"}
+                    onChange={toggleSubCategory}
+                  />
+                  Topwear
+                </p>
+                <p className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    className="w-3"
+                    value={"Bottomwear"}
+                    onChange={toggleSubCategory}
+                  />
+                  Bottomwear
+                </p>
+                <p className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    className="w-3"
+                    value={"Winterwear"}
+                    onChange={toggleSubCategory}
+                  />
+                  Winterwear
+                </p>
+              </div>
+            </div> */}
+          </>
+        )}
       </div>
 
       <div className="flex-1">

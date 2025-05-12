@@ -12,7 +12,7 @@ import Navbar from "./components/Navbar";
 import Collection from "./pages/Collection";
 import Footer from "./components/Footer";
 import SearchBar from "./components/SearchBar";
-import Wishlist from "./pages/Wishlist";
+
 import { ToastContainer, toast } from "react-toastify";
 import Whishlist from "./pages/Wishlist";
 
