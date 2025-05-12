@@ -6,10 +6,25 @@ import RelatedProducts from "../components/RelatedProducts";
 
 const Product = () => {
   const { productId } = useParams();
-  const { products, currency, addToCart } = useContext(ShopContext);
+  const {
+    products,
+    currency,
+    addToCart,
+    addToWishlist,
+    removeFromWishlist,
+    isInWishlist,
+  } = useContext(ShopContext);
   const [productData, setProductData] = useState(false);
   const [image, setImage] = useState("");
   const [size, setSize] = useState("");
+
+  const handleWishlistClick = () => {
+    if (isInWishlist(productData._id)) {
+      removeFromWishlist(productData._id);
+    } else {
+      addToWishlist(productData._id, productData);
+    }
+  };
 
   const fetchProductData = async () => {
     products.map((item) => {
@@ -86,7 +101,11 @@ const Product = () => {
           >
             ADD TO CART
           </button>
-
+          <button onClick={handleWishlistClick}>
+            {isInWishlist(productData._id)
+              ? "Remove from Wishlist 💔"
+              : "Add to Wishlist ❤️"}
+          </button>
           <hr className="mt-8 sm:w-4/5" />
           <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
             <p>100% Original Product</p>

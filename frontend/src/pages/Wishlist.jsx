@@ -11,7 +11,8 @@ const Wishlist = () => {
     theme,
   } = useContext(ShopContext);
 
-  const hasItems = Object.keys(wishlistItems || {}).length > 0;
+  //   const hasItems = Object.keys(wishlistItems || {}).length > 0;
+  const hasItems = wishlistItems && Object.keys(wishlistItems).length > 0;
 
   return (
     <div className="my-10">

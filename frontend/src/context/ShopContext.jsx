@@ -16,7 +16,10 @@ const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [products, setProducts] = useState([]);
   const [token, setToken] = useState("");
-  const [wishlistItems, setWishlistItems] = useState({});
+  const [wishlistItems, setWishlistItems] = useState(() => {
+    const savedWishlist = localStorage.getItem("wishlistItems");
+    return savedWishlist ? JSON.parse(savedWishlist) : {};
+  });
   const navigate = useNavigate();
 
   // ✅ Theme toggle function
@@ -33,6 +36,11 @@ const ShopContextProvider = (props) => {
     setTheme(savedTheme);
     document.body.className = savedTheme;
   }, []);
+
+  // Save wishlist to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("wishlistItems", JSON.stringify(wishlistItems));
+  }, [wishlistItems]);
 
   const addToCart = async (itemId, size) => {
     let cartData = structuredClone(cartItems);
@@ -156,29 +164,34 @@ const ShopContextProvider = (props) => {
   });
 
   const addToWishlist = (productId, product) => {
-    setWishlistItems((prev) => ({
-      ...prev,
-      [productId]: {
-        _id: productId,
-        name: product.name,
-        price: product.price,
-        image: product.image[0], // Use the first image
-        category: product.category,
-        subCategory: product.subCategory,
-      },
-    }));
+    setWishlistItems((prev) => {
+      const updatedWishlist = {
+        ...prev,
+        [productId]: {
+          _id: productId,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          category: product.category,
+          subCategory: product.subCategory,
+        },
+      };
+      toast.success("Added to wishlist!");
+      return updatedWishlist;
+    });
   };
 
   const removeFromWishlist = (productId) => {
     setWishlistItems((prev) => {
       const newItems = { ...prev };
       delete newItems[productId];
+      toast.success("Removed from wishlist!");
       return newItems;
     });
   };
 
   const isInWishlist = (productId) => {
-    return !!wishlistItems[productId];
+    return wishlistItems && wishlistItems[productId] !== undefined;
   };
 
   const getWishlistCount = () => {
@@ -209,6 +222,7 @@ const ShopContextProvider = (props) => {
     removeFromWishlist,
     isInWishlist,
     getWishlistCount,
+    wishlistItems,
   };
 
   return (

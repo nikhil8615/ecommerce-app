@@ -67,7 +67,7 @@ const Navbar = () => {
           alt=""
         />
 
-        <NavLink to="/whishlist" className="relative">
+        <NavLink to="/wishlist" className="relative">
           <AiFillHeart
             className={`text-[22px] cursor-pointer ${
               theme === "dark"
@@ -76,7 +76,6 @@ const Navbar = () => {
             }`}
           />
         </NavLink>
-
         <div className="group relative">
           <img
             onClick={() => (token ? null : navigate("/login"))}
