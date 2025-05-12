@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { assets } from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
+import img from "../assets/image_hero.png";
 
 const HeroSkeleton = ({ theme }) => {
   return (
@@ -75,7 +76,7 @@ const Hero = () => {
               theme === "dark" ? "text-white" : ""
             }`}
           >
-            Latest Arrivals
+            Fuel Your Body
           </h1>
           <div className="flex items-center gap-2">
             <p
@@ -93,7 +94,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
-      <img className="w-full sm:w-1/2" src={assets.hero_img} alt="" />
+      <img className="w-full sm:w-1/2" src={img} alt="" />
     </div>
   );
 };

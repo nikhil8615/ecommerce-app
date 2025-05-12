@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { assets } from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
+import img5 from "../assets/logo_white_text.png";
 
 const Footer = () => {
   const { theme } = useContext(ShopContext); // Get theme from context
@@ -13,7 +14,11 @@ const Footer = () => {
         }`}
       >
         <div>
-          <img src={assets.logo} className="mb-5 w-32" alt="" />
+          <img
+            src={theme === "dark" ? img5 : assets.logo}
+            className="mb-5 w-32"
+            alt=""
+          />
           <p className="w-full md:w-2/3">
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio esse
             ipsa eaque voluptate quasi odit consequuntur unde, velit expedita

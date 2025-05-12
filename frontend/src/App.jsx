@@ -15,6 +15,7 @@ import SearchBar from "./components/SearchBar";
 
 import { ToastContainer, toast } from "react-toastify";
 import Whishlist from "./pages/Wishlist";
+import MyProfile from "./pages/MyProfile";
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="/placeorder" element={<Placeorder />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/wishlist" element={<Whishlist />} />
+        <Route path="/myprofile" element={<MyProfile />} />
       </Routes>
       <Footer />
     </div>

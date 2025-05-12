@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { assets } from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
+import img from "../assets/images_customer.png";
+import img2 from "../assets/exchange_image_icon.png";
 
 const OurPolicy = () => {
   const { theme } = useContext(ShopContext); // Get theme from context
@@ -12,7 +14,11 @@ const OurPolicy = () => {
       }`} // Conditional text color
     >
       <div>
-        <img src={assets.exchange_icon} className="w-12 m-auto mb-5" alt="" />
+        <img
+          src={theme === "dark" ? img2 : assets.exchange_icon}
+          className="w-12 m-auto mb-5"
+          alt=""
+        />
         <p className="font-semibold">Easy Exchange Policy</p>
         <p className="text-gray-400">We offer hassle free exchange policy</p>
       </div>
@@ -22,7 +28,11 @@ const OurPolicy = () => {
         <p className="text-gray-400">We provide 7 days free return policy</p>
       </div>
       <div>
-        <img src={assets.support_img} className="w-12 m-auto mb-5" alt="" />
+        <img
+          src={theme === "dark" ? img : assets.support_img}
+          className="w-12 m-auto mb-5"
+          alt=""
+        />
         <p className="font-semibold">Best Customer Support</p>
         <p className="text-gray-400">we provide 24/7 customer support</p>
       </div>

@@ -5,6 +5,9 @@ import { ShopContext } from "../context/ShopContext";
 import Switch from "./Switch";
 import img from "../assets/shopping_bag-removebg-preview.png";
 import img2 from "../assets/images-removebg-preview.png";
+import img3 from "../assets/images_search.png";
+import img4 from "../assets/logo_white_text.png";
+import img5 from "../assets/hamberger_white.png";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
@@ -29,7 +32,11 @@ const Navbar = () => {
   return (
     <div className="flex items-center justify-between py-5 font-medium">
       <Link to={"/"}>
-        <img src={assets.logo} className="w-36" alt="" />
+        <img
+          src={theme === "dark" ? img4 : assets.logo}
+          className="w-36"
+          alt=""
+        />
       </Link>
       <ul
         className={`hidden sm:flex gap-5 text-sm ${
@@ -58,7 +65,8 @@ const Navbar = () => {
           <Switch toggleTheme={toggleTheme} theme={theme} />
         </div>
         <img
-          src={assets.search_icon}
+          src={theme === "dark" ? img3 : assets.search_icon}
+          // src={assets.search_icon}
           className="w-5 cursor-pointer"
           onClick={() => setShowSearch(true)}
           alt=""
@@ -72,14 +80,25 @@ const Navbar = () => {
           />
 
           {token && (
-            <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
+            <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4 z-50">
               <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
-                <p className="cursor-pointer hover:text-black">My profile</p>
+                <p
+                  onClick={() => navigate("/myprofile")}
+                  className="cursor-pointer hover:text-black"
+                >
+                  My profile
+                </p>
                 <p
                   onClick={() => navigate("/orders")}
                   className="cursor-pointer hover:text-black"
                 >
                   Orders
+                </p>
+                <p
+                  onClick={() => navigate("/wishlist")}
+                  className="cursor-pointer hover:text-black"
+                >
+                  Wishlist
                 </p>
                 <p onClick={logout} className="cursor-pointer hover:text-black">
                   Logout
@@ -99,7 +118,7 @@ const Navbar = () => {
           </p>
         </Link>
         <img
-          src={assets.menu_icon}
+          src={theme === "dark" ? img5 : assets.menu_icon}
           className="w-5 cursor-pointer sm:hidden"
           onClick={() => setVisible(true)}
           alt=""
@@ -157,7 +176,13 @@ const Navbar = () => {
             </NavLink>
             {token ? (
               <>
-                <div className="py-2 pl-6 border block cursor-pointer hover:bg-gray-50">
+                <div
+                  onClick={() => {
+                    navigate("/myprofile");
+                    setVisible(false);
+                  }}
+                  className="py-2 pl-6 border block cursor-pointer hover:bg-gray-50"
+                >
                   My Profile
                 </div>
                 <div
