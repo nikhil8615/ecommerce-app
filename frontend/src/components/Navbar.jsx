@@ -155,6 +155,41 @@ const Navbar = () => {
             >
               WISHLIST
             </NavLink>
+            {token ? (
+              <>
+                <div className="py-2 pl-6 border block cursor-pointer hover:bg-gray-50">
+                  My Profile
+                </div>
+                <div
+                  onClick={() => {
+                    navigate("/orders");
+                    setVisible(false);
+                  }}
+                  className="py-2 pl-6 border block cursor-pointer hover:bg-gray-50"
+                >
+                  Orders
+                </div>
+                <div
+                  onClick={() => {
+                    logout();
+                    setVisible(false);
+                  }}
+                  className="py-2 pl-6 border block cursor-pointer hover:bg-gray-50"
+                >
+                  Logout
+                </div>
+              </>
+            ) : (
+              <div
+                onClick={() => {
+                  navigate("/login");
+                  setVisible(false);
+                }}
+                className="py-2 pl-6 border block cursor-pointer hover:bg-gray-50"
+              >
+                Login
+              </div>
+            )}
           </div>
         </div>
       </div>
